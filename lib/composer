@@ -123,6 +123,13 @@ function install_composer_deps() {
 
             local extension_package_path="ext/$(php_api_version)/php-${ext}"
             package_found="$(has_package "${PHP_BASE_URL}" "${extension_package_path}")"
+
+
+            if [ "${ext}" = "event" ] || [ "${ext}" = "amqp" ]; then
+                package_found="false"
+            fi
+
+
             if [ "${package_found}" = "true" ] ; then
               echo "Installing PHP extension: ${ext}" | indent
               fetch_package "${PHP_BASE_URL}" "${extension_package_path}" "/app/vendor/php"
