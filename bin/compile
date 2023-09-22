@@ -248,7 +248,6 @@ status "Bundling PHP ${PHP_VERSION}"
 
 # Install libraries also on build container, so PHP doesn't complain about missing
 # dynamic libraries when running it during the slug compilation.
-fetch_package "$PHP_BASE_URL" "libmcrypt-${mcrypt_version}" /app/vendor/libmcrypt > /dev/null
 fetch_package "$PHP_BASE_URL" "libzip-${zip_version}" /app/vendor/libzip > /dev/null
 fetch_package "$PHP_BASE_URL" "libwebp-${webp_version}" /app/vendor/libwebp > /dev/null
 
@@ -291,11 +290,6 @@ fetch_package "$PHP_BASE_URL" "ext/$(php_api_version)/php-redis" "/app/vendor/ph
 
 echo "       mongodb"
 fetch_package "$PHP_BASE_URL" "ext/$(php_api_version)/php-mongodb" "/app/vendor/php" | indent
-
-if [ "$(php_api_version)" = "20170718" -o "$(php_api_version)" = "20180731" ] ; then
-    echo "       mcrypt"
-    fetch_package "$PHP_BASE_URL" "ext/$(php_api_version)/php-mcrypt" "/app/vendor/php" | indent
-fi
 
 if [ -f "$BUILD_DIR/composer.json" ] && package_datadog_enabled; then
     install_datadog "${DATADOG_TRACER_VERSION}" "${DATADOG_APPSEC_VERSION}"
@@ -413,7 +407,6 @@ status "Vendoring binaries into slug"
 
 mv /app/vendor/nginx vendor/nginx
 mv /app/vendor/php vendor/php
-[ -d "/app/vendor/libmcrypt" ] && mv /app/vendor/libmcrypt vendor/libmcrypt
 [ -d "/app/vendor/libonig" ] && mv /app/vendor/libonig vendor/libonig
 [ -d "/app/vendor/libzip" ] && mv /app/vendor/libzip vendor/libzip
 [ -d "/app/vendor/coreutils" ] && mv /app/vendor/coreutils vendor/coreutils
