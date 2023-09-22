@@ -125,7 +125,12 @@ function install_composer_deps() {
             package_found="$(has_package "${PHP_BASE_URL}" "${extension_package_path}")"
 
 
-            if [ "${ext}" = "event" ] || [ "${ext}" = "amqp" ] || [ "${ext}" = "igbinary" ] || [ "${ext}" = "scoutapm" ] || [ "${ext}" = "mcrypt" ]; then
+            if [ "${ext}" = "event" ] \
+                || [ "${ext}" = "amqp" ] \
+                || [ "${ext}" = "igbinary" ] \
+                || [ "${ext}" = "scoutapm" ] \
+                || [ "${ext}" = "mcrypt" ] \
+                || [ "${ext}" = "imagick" ]; then
                 package_found="false"
             fi
 
